@@ -1,0 +1,4 @@
+#!/bin/bash
+
+find /bin /boot /etc /lib /lib32 /lib64 /opt /sbin /usr /var >/tmp/diff.dat.new
+diff /tmp/diff.dat /tmp/diff.dat.new |egrep '^> ' |sed 's/^> //'

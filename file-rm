@@ -1,0 +1,42 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Usage: file-rm <files file>"
+    exit 1
+fi
+
+if [ ! -f $1 ]; then
+    echo "$1 file not found."
+    exit 1
+fi
+
+# Set IFS to deal with files and directories that have spaces.
+OFS=$IFS
+IFS="
+"
+echo
+echo "Removing files:"
+echo
+
+for f in $(cat $1); do
+    if [ ! -d $f ]; then
+        rm "$f"
+        echo $f
+    fi
+done
+
+echo
+echo "Removing empty directories:"
+echo
+
+for d in $(sort -r $1); do
+    if [ -d $d ]; then
+        rm -d "$d" 2>/dev/null
+
+        if [ $? -eq 0 ]; then
+            echo $d
+        else
+            echo "$d [skipped: not empty]"
+        fi
+    fi
+done

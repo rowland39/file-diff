@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Generating a new file database."
+find /bin /boot /etc /lib /lib32 /lib64 /opt /sbin /usr /var >/tmp/diff.dat
